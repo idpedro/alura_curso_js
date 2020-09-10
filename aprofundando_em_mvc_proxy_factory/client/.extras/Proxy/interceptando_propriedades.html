@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy</title>
+</head>
+<body>
+    <h1>Vai pra o console</h1>
+    <script>
+        class Funcionario {
+
+            constructor(email) {
+                this._email = email;
+            }
+
+            get email() {
+                return this._email;
+            }
+
+            set email(email) {
+                this._email = email;
+            }
+        }
+        let funcionario = new Proxy(new Funcionario("abc@abc.com"),{
+        set(target,props,value,receiver){
+            console.log(`Alterando ${props}: \n Valor Antigo ${target[props]}, valor novo ${value}`)
+            return "**"+Reflect.set(target,props,value,receiver)+"**";
+        }
+        })
+    </script>
+</body>
+</html>

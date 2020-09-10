@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olhe o console</title>
+</head>
+<body>
+    <h1>Olhe no console</h1>
+    <script>
+        let carro = {
+            velocidade: 100,
+            acelera :()=> {
+                console.log(this);
+                console.log(`Carro a ${this.velocidade} km por hora!`);
+            }
+        };
+        carro.acelera();
+    </script>
+</body>
+</html>

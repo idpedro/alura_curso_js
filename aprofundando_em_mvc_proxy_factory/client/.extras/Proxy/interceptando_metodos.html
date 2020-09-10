@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proxy</title>
+</head>
+<body>
+    <h1>Vai pra o console</h1>
+    <script>
+        class Pessoa {
+
+            constructor(nome) {
+                this._nome = nome;
+            }
+
+            get nome() {
+                return this._nome;
+            }
+
+            set nome(nome) {
+                this._nome = nome;
+            }
+
+            grita(frase) {
+                    return `${this._nome} grita: ${frase}`;
+            }
+        }
+
+        let pessoa = new Proxy(new Pessoa("Pedro"),{
+            get(target,props,receiver){
+            if(['grita'].includes(props) && typeof(target[props]) === typeof(Function)){
+                return function(){
+                    return Reflect.apply(target[props],target,arguments)
+                }
+            }
+            console.log(typeof(target[props]))
+            return Reflect.get(target,props,receiver);
+            },
+            set(target,props,value,receiver){
+                console.log(`Alterando ${props}: \n Valor Antigo ${target[props]}, valor novo ${value}`)
+                return "**"+Reflect.set(target,props,value,receiver)+"**";
+            }
+        })
+
+       console.log(pessoa.grita('Dale'));
+    </script>
+</body>
+</html>

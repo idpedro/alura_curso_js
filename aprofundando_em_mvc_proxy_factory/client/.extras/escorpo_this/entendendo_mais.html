@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1>TITULO</h1>
+    <p>PARAGRAFO</p>
+    <div>DADOS</div>
+    <div>
+        <a>Teste</a>
+    </div>
+
+    <script>
+        console.log(this); // é window
+        // nesse caso o this da função e dinamico 
+        let exibeConteudo = function() {
+            console.log(this);
+            console.log(this.textContent);
+        };
+        // se usarmos a declaração como arrow function 
+        // o escopo da função sera lexo  tendo o this estatico
+        // matendo o escopo de onde ela foi iniciada 
+        // no caso de usarmos a declaração function
+        // na sua chamada podemos usar o Reflect.apply(função,escopo_do_this,[parametros])
+        $ = document.querySelector.bind(document);
+
+        $('h1').addEventListener('click', exibeConteudo);
+
+        $('p').addEventListener('click', exibeConteudo);
+
+        $('div').addEventListener('click', exibeConteudo);
+
+        $('a').addEventListener('click',exibeConteudo);
+
+    </script>
+</body>
+</html>

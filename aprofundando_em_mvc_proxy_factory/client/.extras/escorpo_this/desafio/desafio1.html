@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OLHE O CONSOLE</title>
+</head>
+<body>
+    <h1>Olhe o console</h1>
+    <script>
+        class Relogio {
+
+            constructor() {
+                this._segundos = 0;
+                // usando arrow fuction para o this lexo (estatico)
+                setInterval(()=> {
+                    console.log('Resolvido',++this._segundos);
+                }, 1000);
+                // codigo com problema
+                // problema devido a o this esta dinamico
+                // quando e chamada o escopo sera o 
+                // de onde ela foi chamada
+                // logo será o window
+                // setInterval(function () {
+                //     console.log(++this._segundos);
+                // }, 1000);
+            }
+        }
+
+        var relogio = new Relogio();
+    </script>
+</body>
+</html>
