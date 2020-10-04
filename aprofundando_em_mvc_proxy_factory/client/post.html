@@ -33,13 +33,21 @@
         function sendPost(event) {
 
             event.preventDefault();
-            console.log("Enviando post");
-            
-            console.log(event)
-
-            //aqui você deve ler os dados do formulário
-            //construir o json
-            //enviar o XMLHttpRequest
+            let form =document.querySelector(".form");
+            let body  = {
+                data:form.data.value,
+                quantidade:form.quantidade.value,
+                valor:form.valor.value
+            }
+            fetch("http://localhost:3000/negociacoes",{
+                method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(body)
+            }).then(response=>response.json())
+            .then( json=> console.log(json))
+            .catch(err => console.error(err));
         }
     </script>
 </body>
