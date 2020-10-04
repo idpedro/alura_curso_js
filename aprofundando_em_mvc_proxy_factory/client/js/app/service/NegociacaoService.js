@@ -1,20 +1,37 @@
 class NegociacoesService{
     obterNegociacoesDaSemana(callback){
-        let xhr = new XMLHttpRequest();
-        xhr.onreadystatechange = ()=>{
-            if(xhr.readyState == 4){
-                if( xhr.status == 200){
-                    callback(
-                        null,
-                        JSON.parse(xhr.responseText).
-                        map((objeto)=> new Negociacao(new Date(objeto.data),objeto.quantidade,objeto.valor))    
-                    )
-                }else{
-                    callback("Não foi possivel carregar as negociações");
-                }
-            }
-        }
-        xhr.open("GET","http://localhost:3000/negociacoes/semana");
-        xhr.send();
+        fetch("http://localhost:3000/negociacoes/semana")
+        .then(resposta=> resposta.json())
+        .then(json=> 
+            callback(
+                null,
+                json.
+                map((objeto)=> new Negociacao(new Date(objeto.data),objeto.quantidade,objeto.valor))    
+            )
+        )
+        .catch(err=>  callback("Não foi possivel carregar as negociações da semana"));
+    }
+    obterNegociacoesDaSemanaAnterior(callback){
+        fetch("http://localhost:3000/negociacoes/anterior")
+        .then(resposta=> resposta.json())
+        .then(json=>
+            callback(
+                null,
+                json
+                .map((objeto)=> new Negociacao(new Date(objeto.data),objeto.quantidade,objeto.valor))
+        )            )
+        .catch(err =>  callback("Não foi possivel carregar as negociações da semana anterior"));
+    }
+    obterNegociacoesDaSemanaRetrasada(callback){
+        fetch("http://localhost:3000/negociacoes/retrasada")
+        .then(resposta=> resposta.json())
+        .then(json=> 
+            callback(
+                null,
+                json.
+                map((objeto)=> new Negociacao(new Date(objeto.data),objeto.quantidade,objeto.valor))    
+            )
+        )
+        .catch(err=>  callback("Não foi possivel carregar as negociações da semana retrasada"));
     }
 }
